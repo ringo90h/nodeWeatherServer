@@ -9,29 +9,33 @@ const forecast = require('./utils/forecast')
 /*
 //현재 app.js가 위치한 파일의 경로
 console.log(__dirname)
-//경로 + 파일
+//경로 + 파일명
 console.log(__filename)
-console.log(path.join(__dirname, '../public'))
 */
 
 const app = express()
 
-//Define paths for Express config
+//****************** 경로 설정 시작 ******************
+
+//각 폴더의 경로 설정(path 모듈 사용)
 const publicDirectoryPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
 const partialsPath = path.join(__dirname, '../templates/partials')
 
-//Setup handlebars engine and views location
+//hbs 엔진 사용, 뷰,partial path 설정
 app.set('view engine','hbs')
 app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
-//Setup static directiory to serve
+//정적 파일의 경로 설정
 app.use(express.static(publicDirectoryPath))
+
+//****************** 경로 설정 끝******************
+//****************** 라우팅 시작 ******************
 
 app.get('', (req, res)=>{
   res.render('index', {
-    title: 'Weather',
+    title: '지금날씨',
     name: 'Henry Hwang',
   })
 })
@@ -39,6 +43,7 @@ app.get('', (req, res)=>{
 app.get('/about', (req,res)=>{
   res.render('about',{
     fotitlerecast: 'About Me',
+    title: '제작자',
     name: 'Henry Hwang',
   })
 })
